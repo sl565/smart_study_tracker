@@ -1,0 +1,66 @@
+비전 기반 아이스크림 품질 검사 알고리즘 개발: 
+실시간 온도 모니터링 및 제어 시스템 구축: 
+위생 관리를 위한 자동 세척 시스템 설계: <!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>스마트 학습 트래커</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <h1>스마트 학습 트래커</h1>
+        <nav>
+            <ul>
+                <li><a href="#dashboard">대시보드</a></li>
+                <li><a href="#goals">목표 설정</a></li>
+                <li><a href="#daily-log">일일 기록</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="dashboard">
+            <h2>학습 대시보드</h2>
+            <div id="progress-chart"></div>
+            <div id="recommendations"></div>
+        </section>
+
+        <section id="goals">
+            <h2>학습 목표 설정</h2>
+            <form id="goal-form">
+                <label for="subject">과목:</label>
+                <input type="text" id="subject" name="subject" required>
+                
+                <label for="target-date">목표 날짜:</label>
+                <input type="date" id="target-date" name="target-date" required>
+                
+                <button type="submit">목표 설정</button>
+            </form>
+        </section>
+
+        <section id="daily-log">
+            <h2>일일 학습 기록</h2>
+            <form id="log-form">
+                <label for="study-date">날짜:</label>
+                <input type="date" id="study-date" name="study-date" required>
+                
+                <label for="study-time">학습 시간 (분):</label>
+                <input type="number" id="study-time" name="study-time" required>
+                
+                <label for="notes">메모:</label>
+                <textarea id="notes" name="notes"></textarea>
+                
+                <button type="submit">기록 저장</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 스마트 학습 트래커. All rights reserved.</p>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
