@@ -60,6 +60,83 @@
     <footer>
         <p>&copy; 2024 스마트 학습 트래커. All rights reserved.</p>
     </footer>
+    <script>
+    const API_URL = 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL';
+
+    async function addUser(name, email) {
+    const response = await fetch(API_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: `action=addUser&name=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}`
+    });
+    return response.text();
+    }
+
+    async function addGoal(userId, subject, targetDate) {
+    const response = await fetch(API_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: `action=addGoal&userId=${encodeURIComponent(userId)}&subject=${encodeURIComponent(subject)}&targetDate=${encodeURIComponent(targetDate)}`
+    });
+    return response.text();
+    }
+
+    async function addDailyLog(userId, date, studyTime, notes) {
+    const response = await fetch(API_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: `action=addDailyLog&userId=${encodeURIComponent(userId)}&date=${encodeURIComponent(date)}&studyTime=${encodeURIComponent(studyTime)}&notes=${encodeURIComponent(notes)}`
+    });
+    return response.text();
+    }
+
+    async function getUserProgress(userId) {
+    const response = await fetch(`${API_URL}?action=getProgress&userId=${encodeURIComponent(userId)}`, {
+        method: 'GET',
+        mode: 'cors',
+    });
+    return response.json();
+    }
+
+    // 폼 제출 이벤트 리스너 추가
+    document.getElementById('goal-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const userId = '1'; // 임시 사용자 ID
+    const subject = document.getElementById('subject').value;
+    const targetDate = document.getElementById('target-date').value;
+    const result = await addGoal(userId, subject, targetDate);
+    alert(result);
+    });
+
+    document.getElementById('log-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const userId = '1'; // 임시 사용자 ID
+    const date = document.getElementById('study-date').value;
+    const studyTime = document.getElementById('study-time').value;
+    const notes = document.getElementById('notes').value;
+    const result = await addDailyLog(userId, date, studyTime, notes);
+    alert(result);
+    });
+
+    // 페이지 로드 시 사용자 진도 표시
+    window.addEventListener('load', async () => {
+    const userId = '1'; // 임시 사용자 ID
+    const progress = await getUserProgress(userId);
+    document.getElementById('progress-chart').innerHTML = `
+        <p>총 학습 시간: ${progress.totalStudyTime}분</p>
+        <p>학습 기록 수: ${progress.logCount}</p>
+    `;
+    });
+    </script>
 
     <script src="js/main.js"></script>
 </body>
