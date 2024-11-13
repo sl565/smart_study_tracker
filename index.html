@@ -4,138 +4,133 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>스마트 학습 트래커</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/busy-load/dist/app.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/busy-load/dist/app.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/gh/dinoqqq/simple-popup@master/dist/jquery.simple-popup.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/gh/dinoqqq/simple-popup@master/dist/jquery.simple-popup.min.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-    <header>
-        <h1>스마트 학습 트래커</h1>
-        <nav>
-            <ul>
-                <li><a href="#dashboard">대시보드</a></li>
-                <li><a href="#goals">목표 설정</a></li>
-                <li><a href="#daily-log">일일 기록</a></li>
-            </ul>
-        </nav>
-    </header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="#">스마트 학습 트래커</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#dashboard">대시보드</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#goals">목표 설정</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#daily-log">일일 기록</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
-    <main>
+    <div class="container mt-4">
         <section id="dashboard">
-            <h2>학습 대시보드</h2>
-            <div id="progress-chart"></div>
-            <div id="recommendations"></div>
+            <h2 class="mb-4">학습 대시보드</h2>
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">학습 진행 상황</h5>
+                            <canvas id="progress-chart"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">다가오는 목표</h5>
+                            <ul id="upcoming-goals" class="list-group list-group-flush">
+                                <!-- 동적으로 채워질 예정 -->
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </section>
 
-        <section id="goals">
-            <h2>학습 목표 설정</h2>
-            <form id="goal-form">
-                <label for="subject">과목:</label>
-                <input type="text" id="subject" name="subject" required>
-                
-                <label for="target-date">목표 날짜:</label>
-                <input type="date" id="target-date" name="target-date" required>
-                
-                <button type="submit">목표 설정</button>
-            </form>
+        <section id="goals" class="mt-5">
+            <h2 class="mb-4">학습 목표 설정</h2>
+            <div class="card">
+                <div class="card-body">
+                    <form id="goal-form">
+                        <div class="mb-3">
+                            <label for="subject" class="form-label">과목:</label>
+                            <input type="text" class="form-control" id="subject" name="subject" required placeholder="예: 수학, 영어, 과학">
+                        </div>
+                        <div class="mb-3">
+                            <label for="target-date" class="form-label">목표 날짜:</label>
+                            <input type="date" class="form-control" id="target-date" name="target-date" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">목표 설정</button>
+                    </form>
+                </div>
+            </div>
         </section>
 
-        <section id="daily-log">
-            <h2>일일 학습 기록</h2>
-            <form id="log-form">
-                <label for="study-date">날짜:</label>
-                <input type="date" id="study-date" name="study-date" required>
-                
-                <label for="study-time">학습 시간 (분):</label>
-                <input type="number" id="study-time" name="study-time" required>
-                
-                <label for="notes">메모:</label>
-                <textarea id="notes" name="notes"></textarea>
-                
-                <button type="submit">기록 저장</button>
-            </form>
+        <section id="daily-log" class="mt-5">
+            <h2 class="mb-4">일일 학습 기록</h2>
+            <div class="card">
+                <div class="card-body">
+                    <form id="log-form">
+                        <div class="mb-3">
+                            <label for="study-date" class="form-label">날짜:</label>
+                            <input type="date" class="form-control" id="study-date" name="study-date" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="study-time" class="form-label">학습 시간 (분):</label>
+                            <input type="number" class="form-control" id="study-time" name="study-time" required min="0">
+                        </div>
+                        <div class="mb-3">
+                            <label for="notes" class="form-label">메모:</label>
+                            <textarea class="form-control" id="notes" name="notes" rows="3" placeholder="오늘의 학습 내용이나 느낀 점을 적어보세요."></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">기록 저장</button>
+                    </form>
+                </div>
+            </div>
         </section>
-    </main>
 
-    <footer>
-        <p>&copy; 2024 스마트 학습 트래커. All rights reserved.</p>
+        <section id="email-form" class="mt-5">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">서비스 알림 신청</h5>
+                    <p class="card-text">이메일을 남겨주시면 서비스가 런칭되었을 때 알림을 드리겠습니다.</p>
+                    <input id="submit-email" type="email" class="form-control mb-3" placeholder="알림을 받으실 이메일">
+                    <p class="card-text">서비스가 이렇게 되었으면 좋겠다는 조언을 해 주세요.</p>
+                    <textarea id="submit-advice" class="form-control mb-3" rows="3" placeholder="서비스에 대한 조언을 남겨주세요"></textarea>
+                    <button id="submit" class="btn btn-primary w-100">지금 제출!</button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer class="bg-light text-center text-lg-start mt-5">
+        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+            © 2024 스마트 학습 트래커. All rights reserved.
+        </div>
     </footer>
-    <script>
-    const API_URL = 'https://script.google.com/macros/s/AKfycbxF-iVXC7psov68UrzPMl3hXpl9QnYHzbGj7qvvUcf3jIkAfuQqB3eFNmURZ5ynys8/exec';
 
-    async function addUser(name, email) {
-    const response = await fetch(API_URL, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: `action=addUser&name=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}`
-    });
-    return response.text();
-    }
+    <div id="popup" style="display:none;">
+        <h1>감사합니다.</h1>
+        <p>이제는 우리는 같은 배를 탔습니다.</p>
+    </div>
 
-    async function addGoal(userId, subject, targetDate) {
-    const response = await fetch(API_URL, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: `action=addGoal&userId=${encodeURIComponent(userId)}&subject=${encodeURIComponent(subject)}&targetDate=${encodeURIComponent(targetDate)}`
-    });
-    return response.text();
-    }
-
-    async function addDailyLog(userId, date, studyTime, notes) {
-    const response = await fetch(API_URL, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: `action=addDailyLog&userId=${encodeURIComponent(userId)}&date=${encodeURIComponent(date)}&studyTime=${encodeURIComponent(studyTime)}&notes=${encodeURIComponent(notes)}`
-    });
-    return response.text();
-    }
-
-    async function getUserProgress(userId) {
-    const response = await fetch(`${API_URL}?action=getProgress&userId=${encodeURIComponent(userId)}`, {
-        method: 'GET',
-        mode: 'cors',
-    });
-    return response.json();
-    }
-
-    // 폼 제출 이벤트 리스너 추가
-    document.getElementById('goal-form').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const userId = '1'; // 임시 사용자 ID
-    const subject = document.getElementById('subject').value;
-    const targetDate = document.getElementById('target-date').value;
-    const result = await addGoal(userId, subject, targetDate);
-    alert(result);
-    });
-
-    document.getElementById('log-form').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const userId = '1'; // 임시 사용자 ID
-    const date = document.getElementById('study-date').value;
-    const studyTime = document.getElementById('study-time').value;
-    const notes = document.getElementById('notes').value;
-    const result = await addDailyLog(userId, date, studyTime, notes);
-    alert(result);
-    });
-
-    // 페이지 로드 시 사용자 진도 표시
-    window.addEventListener('load', async () => {
-    const userId = '1'; // 임시 사용자 ID
-    const progress = await getUserProgress(userId);
-    document.getElementById('progress-chart').innerHTML = `
-        <p>총 학습 시간: ${progress.totalStudyTime}분</p>
-        <p>학습 기록 수: ${progress.logCount}</p>
-    `;
-    });
-    </script>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/main.js"></script>
 </body>
 </html>
