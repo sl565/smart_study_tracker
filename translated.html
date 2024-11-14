@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>스마트 학습 트래커</title>
+    <title>Smart Study Tracker</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
@@ -14,68 +14,58 @@
     <link href="https://cdn.jsdelivr.net/npm/busy-load/dist/app.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/gh/dinoqqq/simple-popup@master/dist/jquery.simple-popup.min.js"></script>
     <link href="https://cdn.jsdelivr.net/gh/dinoqqq/simple-popup@master/dist/jquery.simple-popup.min.css" rel="stylesheet" type="text/css" />
-    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
-            <a class="navbar-brand" href="#">스마트 학습 트래커</a>
+            <a class="navbar-brand" href="#">Smart Study Tracker</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link active" href="#dashboard">대시보드</a>
+                        <a class="nav-link active" href="#dashboard">Dashboard</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#goals">목표 설정</a>
+                        <a class="nav-link" href="#goals">Set Goals</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#daily-log">일일 기록</a>
+                        <a class="nav-link" href="#daily-log">Daily Log</a>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
+
+    <!-- Introduction and Hook Section -->
     <div class="container mt-5">
         <div class="row">
             <div class="col-lg-8 mx-auto text-center">
-                <h1 class="display-4 mb-4">스마트 학습 트래커</h1>
+                <h1 class="display-4 mb-4">Smart Study Tracker</h1>
                 <p class="lead mb-4">
-                    성적을 넘어 평생 함께할 공부 습관은 부모가 아이에게 줄 수 있는 큰 선물이 아닐까요?
+                    Isn't a lifelong study habit the greatest gift parents can give to their children?
                 </p>
                 <h2 class="h4 mb-4">
-                    "당신이 매일 30분씩 더 공부했다면, 지금쯤 원하는 대학에 입학했을 수도 있습니다."
+                    "If you had studied 30 minutes more every day, you might have been admitted to your desired university by now."
                 </h2>
                 <p class="mb-5">
-                    스마트 학습 트래커와 함께 효율적인 학습 습관을 만들어가세요. 
-                    목표 설정부터 일일 기록까지, 당신의 학습을 체계적으로 관리합니다.
+                    Create efficient study habits with Smart Study Tracker. 
+                    From goal setting to daily records, we systematically manage your learning.
                 </p>
-                <a href="#dashboard" class="btn btn-primary btn-lg">지금 시작하기</a>
+                <a href="#dashboard" class="btn btn-primary btn-lg">Start Now</a>
             </div>
         </div>
-    </div>
-    <!-- 언어 선택 섹션 -->
-    <div class="container mt-5 text-center">
-        <h2>언어 선택</h2>
-        <select id="languageSelect" class="form-control mb-4">
-            <option value="">언어를 선택하세요</option>
-            <option value="en">English</option> <!-- 영어 옵션 추가 -->
-        </select>
-
-        <!-- 언어 선택 버튼 -->
-        <button id="selectLanguageBtn" class="btn btn-primary">선택하기</button>
     </div>
 
     <div class="container mt-4">
         <section id="dashboard">
-            <h2 class="mb-4">학습 대시보드</h2>
+            <h2 class="mb-4">Learning Dashboard</h2>
             <div class="row">
                 <div class="col-md-8">
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">학습 진행 상황</h5>
+                            <h5 class="card-title">Learning Progress</h5>
                             <canvas id="progress-chart"></canvas>
                         </div>
                     </div>
@@ -83,9 +73,9 @@
                 <div class="col-md-4">
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">다가오는 목표</h5>
+                            <h5 class="card-title">Upcoming Goals</h5>
                             <ul id="upcoming-goals" class="list-group list-group-flush">
-                                <!-- 동적으로 채워질 예정 -->
+                                <!-- To be dynamically filled -->
                             </ul>
                         </div>
                     </div>
@@ -94,42 +84,42 @@
         </section>
 
         <section id="goals" class="mt-5">
-            <h2 class="mb-4">학습 목표 설정</h2>
+            <h2 class="mb-4">Set Learning Goals</h2>
             <div class="card">
                 <div class="card-body">
                     <form id="goal-form">
                         <div class="mb-3">
-                            <label for="subject" class="form-label">과목:</label>
-                            <input type="text" class="form-control" id="subject" name="subject" required placeholder="예: 수학, 영어, 과학">
+                            <label for="subject" class="form-label">Subject:</label>
+                            <input type="text" class="form-control" id="subject" name="subject" required placeholder="e.g., Math, English, Science">
                         </div>
                         <div class="mb-3">
-                            <label for="target-date" class="form-label">목표 날짜:</label>
+                            <label for="target-date" class="form-label">Target Date:</label>
                             <input type="date" class="form-control" id="target-date" name="target-date" required>
                         </div>
-                        <button type="submit" class="btn btn-primary">목표 설정</button>
+                        <button type="submit" class="btn btn-primary">Set Goal</button>
                     </form>
                 </div>
             </div>
         </section>
 
         <section id="daily-log" class="mt-5">
-            <h2 class="mb-4">일일 학습 기록</h2>
+            <h2 class="mb-4">Daily Study Log</h2>
             <div class="card">
                 <div class="card-body">
                     <form id="log-form">
                         <div class="mb-3">
-                            <label for="study-date" class="form-label">날짜:</label>
+                            <label for="study-date" class="form-label">Date:</label>
                             <input type="date" class="form-control" id="study-date" name="study-date" required>
                         </div>
                         <div class="mb-3">
-                            <label for="study-time" class="form-label">학습 시간 (분):</label>
+                            <label for="study-time" class="form-label">Study Time (minutes):</label>
                             <input type="number" class="form-control" id="study-time" name="study-time" required min="0">
                         </div>
                         <div class="mb-3">
-                            <label for="notes" class="form-label">메모:</label>
-                            <textarea class="form-control" id="notes" name="notes" rows="3" placeholder="오늘의 학습 내용이나 느낀 점을 적어보세요."></textarea>
+                            <label for="notes" class="form-label">Notes:</label>
+                            <textarea class="form-control" id="notes" name="notes" rows="3" placeholder="Write about today's study content or your thoughts."></textarea>
                         </div>
-                        <button type="submit" class="btn btn-primary">기록 저장</button>
+                        <button type="submit" class="btn btn-primary">Save Record</button>
                     </form>
                 </div>
             </div>
@@ -138,12 +128,12 @@
         <section id="email-form" class="mt-5">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">서비스 알림 신청</h5>
-                    <p class="card-text">이메일을 남겨주시면 서비스가 런칭되었을 때 알림을 드리겠습니다.</p>
-                    <input id="submit-email" type="email" class="form-control mb-3" placeholder="알림을 받으실 이메일">
-                    <p class="card-text">서비스가 이렇게 되었으면 좋겠다는 조언을 해 주세요.</p>
-                    <textarea id="submit-advice" class="form-control mb-3" rows="3" placeholder="서비스에 대한 조언을 남겨주세요"></textarea>
-                    <button id="submit" class="btn btn-primary w-100">지금 제출!</button>
+                    <h5 class="card-title">Sign Up for Service Notifications</h5>
+                    <p class="card-text">Leave your email, and we'll notify you when the service launches.</p>
+                    <input id="submit-email" type="email" class="form-control mb-3" placeholder="Email for notifications">
+                    <p class="card-text">Please share your advice on how you'd like the service to be.</p>
+                    <textarea id="submit-advice" class="form-control mb-3" rows="3" placeholder="Leave your advice about the service"></textarea>
+                    <button id="submit" class="btn btn-primary w-100">Submit Now!</button>
                 </div>
             </div>
         </section>
@@ -151,28 +141,22 @@
 
     <footer class="bg-light text-center text-lg-start mt-5">
         <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-            © 2024 스마트 학습 트래커. All rights reserved.
+            © 2024 Smart Study Tracker. All rights reserved.
         </div>
     </footer>
 
     <div id="popup" style="display:none;">
-        <h1>감사합니다.</h1>
-        <p>이제는 우리는 같은 배를 탔습니다.</p>
+        <h1>Thank you.</h1>
+        <p>Now we're in the same boat.</p>
     </div>
-    <!-- 언어 선택 기능 스크립트 -->
-    <script>
-        document.getElementById('selectLanguageBtn').addEventListener('click', function() {
-            var selectedLanguage = document.getElementById('languageSelect').value;
-            if (selectedLanguage === "en") {
-                // 영어가 선택되면 번역된 페이지로 이동
-                window.location.href = "translated.html"; // 번역된 페이지의 URL
-            } else {
-                alert("언어를 선택해주세요.");
-            }
-        });
-    </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/main.js"></script>
+    
+    <!-- Language Selection Script -->
+    <script>
+        // Add a button or link to switch back to Korean
+        document.body.insertAdjacentHTML('afterbegin', '<div class="text-center mt-3"><a href="index.html" class="btn btn-secondary">한국어 버전으로 돌아가기</a></div>');
+    </script>
 </body>
 </html>
