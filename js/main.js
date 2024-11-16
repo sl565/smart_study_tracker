@@ -1,14 +1,5 @@
+// API URL 설정
 const API_URL = 'https://script.google.com/macros/s/AKfycbxF-iVXC7psov68UrzPMl3hXpl9QnYHzbGj7qvvUcf3jIkAfuQqB3eFNmURZ5ynys8/exec';
-
-function getIP() {
-  return new Promise((resolve, reject) => {
-    $.getJSON('https://api.ipify.org?format=json', function(data) {
-      resolve(data.ip);
-    }).fail(function() {
-      resolve('unknown');
-    });
-  });
-}
 
 async function collectUserData() {
   try {
@@ -23,16 +14,26 @@ async function collectUserData() {
       device: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ? 'mobile' : 'desktop'
     });
     
-    axios.get(`${API_URL}?action=insert&table=visitors&data=${encodeURIComponent(data)}`)
-      .then(response => {
-        console.log('사용자 데이터 수집 성공:', response.data);
-      })
-      .catch(error => {
-        console.error('사용자 데이터 수집 실패:', error);
-      });
+    const response = await axios.get(`${API_URL}?action=insert&table=visitors&data=${encodeURIComponent(data)}`);
+    console.log('사용자 데이터 수집 성공:', response.data);
   } catch (error) {
-    console.error('IP 주소 가져오기 실패:', error);
+    console.error('사용자 데이터 수집 실패:', error);
   }
+}
+
+
+// 페이지 로드 시 실행
+document.addEventListener('DOMContentLoaded', collectUserData);
+
+
+function getIP() {
+  return new Promise((resolve, reject) => {
+    $.getJSON('https://api.ipify.org?format=json', function(data) {
+      resolve(data.ip);
+    }).fail(function() {
+      resolve('unknown');
+    });
+  });
 }
 
 function getCookieValue(name) {
