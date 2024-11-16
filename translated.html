@@ -35,7 +35,7 @@
                     </li>
                 </ul>
                 <div class="navbar-nav">
-                    <select id="languageSelect" class="form-select" onchange="changeLanguage()">
+                    <select id="languageSelect" class="form-select">
                         <option value="en" selected>English</option>
                         <option value="ko">한국어</option>
                     </select>
@@ -44,7 +44,6 @@
         </div>
     </nav>
 
-    <!-- Introduction and Hook Section -->
     <div class="container mt-5">
         <div class="row">
             <div class="col-lg-8 mx-auto text-center">
@@ -63,8 +62,7 @@
             </div>
         </div>
     </div>
-
-    <div class="container mt-4">
+        <div class="container mt-4">
         <section id="dashboard">
             <h2 class="mb-4">Learning Dashboard</h2>
             <div class="row">
@@ -96,7 +94,7 @@
                     <form id="goal-form">
                         <div class="mb-3">
                             <label for="subject" class="form-label">Subject:</label>
-                            <input type="text" class="form-control" id="subject" name="subject" required placeholder="e.g., Math, English, Science">
+                            <input type="text" class="form-control" id="subject" name="subject" required placeholder="e.g., Math, English, Science" writingsuggestions="off">
                         </div>
                         <div class="mb-3">
                             <label for="target-date" class="form-label">Target Date:</label>
@@ -123,7 +121,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="notes" class="form-label">Notes:</label>
-                            <textarea class="form-control" id="notes" name="notes" rows="3" placeholder="Write about today's study content or your thoughts."></textarea>
+                            <textarea class="form-control" id="notes" name="notes" rows="3" placeholder="Write about today's study content or your thoughts." writingsuggestions="off"></textarea>
                         </div>
                         <button type="submit" class="btn btn-primary">Save Record</button>
                     </form>
@@ -136,9 +134,9 @@
                 <div class="card-body">
                     <h5 class="card-title">Sign Up for Service Notifications</h5>
                     <p class="card-text">Leave your email, and we'll notify you when the service launches.</p>
-                    <input id="submit-email" type="email" class="form-control mb-3" placeholder="Email for notifications">
+                    <input id="submit-email" type="email" class="form-control mb-3" placeholder="Email for notifications" writingsuggestions="off">
                     <p class="card-text">Please share your advice on how you'd like the service to be.</p>
-                    <textarea id="submit-advice" class="form-control mb-3" rows="3" placeholder="Leave your advice about the service"></textarea>
+                    <textarea id="submit-advice" class="form-control mb-3" rows="3" placeholder="Leave your advice about the service" writingsuggestions="off"></textarea>
                     <button id="submit" class="btn btn-primary w-100">Submit Now!</button>
                 </div>
             </div>
@@ -156,19 +154,11 @@
         <p>Now we're in the same boat.</p>
     </div>
 
+    <div id="loading-overlay" class="loading-overlay">
+        <div class="spinner"></div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/main.js"></script>
-
-    <!-- Language Change Script -->
-    <script>
-        function changeLanguage() {
-            var language = document.getElementById('languageSelect').value;
-            if (language === 'ko') {
-                window.location.href = 'index.html';
-            } else {
-                window.location.href = 'translated.html';
-            }
-        }
-    </script>
 </body>
 </html>
