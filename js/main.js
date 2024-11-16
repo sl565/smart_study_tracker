@@ -113,6 +113,44 @@ document.addEventListener('DOMContentLoaded', function() {
     collectUserData();
 });
 
+function getIP() {
+  return new Promise((resolve, reject) => {
+    $.getJSON('https://api.ipify.org?format=json', function(data) {
+      resolve(data.ip);
+    }).fail(function() {
+      resolve('unknown');
+    });
+  });
+}
+
+async function collectUserData() {
+  try {
+    const ip = await getIP();
+    const data = JSON.stringify({
+      id: getUVfromCookie(),
+      landingUrl: window.location.href,
+      ip: ip,
+      referer: document.referrer,
+      time_stamp: getTimeStamp(),
+      utm: new URLSearchParams(window.location.search).get("utm"),
+      device: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ? 'mobile' : 'desktop'
+    });
+    
+    axios.get(`${addrScript}?action=insert&table=visitors&data=${encodeURIComponent(data)}`)
+      .then(response => {
+        console.log('사용자 데이터 수집 성공:', response.data);
+      })
+      .catch(error => {
+        console.error('사용자 데이터 수집 실패:', error);
+      });
+  } catch (error) {
+    console.error('IP 주소 가져오기 실패:', error);
+  }
+}
+
+// 페이지 로드 시 실행
+document.addEventListener('DOMContentLoaded', collectUserData);
+
 // 쿠키 관련 함수들
 function getCookieValue(name) {
     const value = "; " + document.cookie;
