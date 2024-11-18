@@ -153,20 +153,7 @@
             }
         }
 
-        // 데이터 삽입 후
-        axios.get(addrScript + '?action=insert&table=visitor&data=' + data)
-            .then(response => {
-                console.log(JSON.stringify(response));
-                if (response.data && response.data.success) {
-                    // 성공적으로 데이터가 삽입됨
-                    updateStatistics();
-                } else {
-                    console.error("Data insertion failed:", response.data.error);
-                }
-            })
-            .catch(error => {
-                console.error("Error during data insertion:", error);
-            });
+       
 
         $("#submit-study").on("click", function () {
             $.busyLoadFull("show");
@@ -277,6 +264,20 @@
                 .then(response => {
                     studyRecords = response.data.data;
                     updateStatistics();
+                });
+             // 데이터 삽입 후
+            axios.get(addrScript + '?action=insert&table=visitor&data=' + data)
+                .then(response => {
+                    console.log(JSON.stringify(response));
+                    if (response.data && response.data.success) {
+                        // 성공적으로 데이터가 삽입됨
+                        updateStatistics();
+                    } else {
+                        console.error("Data insertion failed:", response.data.error);
+                    }
+                })
+                .catch(error => {
+                    console.error("Error during data insertion:", error);
                 });
         });
     </script>
