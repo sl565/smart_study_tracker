@@ -1,35 +1,57 @@
 <html>
 <head>
+    <title>개인화된 학습 진도 추적기</title>
     <style>
-        div#content {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-
-        input, textarea, button {
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 16px;
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
             color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f4f4f4;
         }
-
+        h3 {
+            color: #2c3e50;
+            text-align: center;
+        }
         .form-group {
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
-
         label {
             display: block;
             margin-bottom: 5px;
+            font-weight: bold;
         }
-
-        .statistics {
-            margin-top: 20px;
-            padding: 15px;
+        input[type="text"], input[type="email"], input[type="number"], input[type="date"], textarea {
+            width: 100%;
+            padding: 8px;
             border: 1px solid #ddd;
-            border-radius: 5px;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        .statistics {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 15px;
+            margin-top: 20px;
+        }
+        .statistics h4 {
+            margin-top: 0;
+            color: #2c3e50;
         }
     </style>
 </head>
@@ -40,47 +62,48 @@
         </div>
     </div>
 
-    <center>
-        <div class="form-group">
-            <label for="learning-goal">학습 목표:</label>
-            <input id="learning-goal" type="text" placeholder="예: TOEIC 900점 달성" />
-        </div>
-        <div class="form-group">
-            <label for="subject">과목:</label>
-            <input id="subject" type="text" placeholder="예: 영어, 수학, 과학" />
-        </div>
-        <div class="form-group">
-            <label for="study-time">오늘의 학습 시간 (분):</label>
-            <input id="study-time" type="number" min="0" />
-        </div>
-        <div class="form-group">
-            <label for="progress">진도 (%):</label>
-            <input id="progress" type="number" min="0" max="100" />
-        </div>
-        <div class="form-group">
-            <label for="target-date">목표 달성 예정일:</label>
-            <input id="target-date" type="date" />
-        </div>
-        <button style="width:350px;" id="submit-study">학습 기록 저장</button>
+    <div class="form-group">
+        <label for="learning-goal">학습 목표:</label>
+        <input id="learning-goal" type="text" placeholder="예: TOEIC 900점 달성" />
+    </div>
+    <div class="form-group">
+        <label for="subject">과목:</label>
+        <input id="subject" type="text" placeholder="예: 영어, 수학, 과학" />
+    </div>
+    <div class="form-group">
+        <label for="study-time">오늘의 학습 시간 (분):</label>
+        <input id="study-time" type="number" min="0" />
+    </div>
+    <div class="form-group">
+        <label for="progress">진도 (%):</label>
+        <input id="progress" type="number" min="0" max="100" />
+    </div>
+    <div class="form-group">
+        <label for="target-date">목표 달성 예정일:</label>
+        <input id="target-date" type="date" />
+    </div>
+    <button id="submit-study">학습 기록 저장</button>
 
-        <div class="statistics">
-            <h4>학습 통계</h4>
-            <p>총 학습 시간: <span id="total-study-time">0</span> 분</p>
-            <p>평균 일일 학습 시간: <span id="avg-study-time">0</span> 분</p>
-            <p>목표 달성까지 남은 시간: <span id="remaining-time">계산 중...</span></p>
-        </div>
+    <div class="statistics">
+        <h4>학습 통계</h4>
+        <p>총 학습 시간: <span id="total-study-time">0</span> 분</p>
+        <p>평균 일일 학습 시간: <span id="avg-study-time">0</span> 분</p>
+        <p>목표 달성까지 남은 시간: <span id="remaining-time">계산 중...</span></p>
+    </div>
 
-        <br><br>
-        <p>이메일을 남겨주시면 서비스가 런칭되었을 때 알림을 드리겠습니다. </p>
-        <input id="submit-email" type="email" placeholder="알림을 받으실 이메일" /> <br><br>
-        <p>서비스가 이렇게 되었으면 좋겠다는 조언을 해 주세요 </p>
-        <textarea id="submit-advice" name="Text1" cols="40" rows="5" placeholder="서비스에 대한 조언을 남겨주세요"></textarea><br>
-        <button style="width:350px;" id="submit">지금 제출! </button>
-    </center>
+    <div class="form-group">
+        <p>이메일을 남겨주시면 서비스가 런칭되었을 때 알림을 드리겠습니다.</p>
+        <input id="submit-email" type="email" placeholder="알림을 받으실 이메일" />
+    </div>
+    <div class="form-group">
+        <p>서비스가 이렇게 되었으면 좋겠다는 조언을 해 주세요</p>
+        <textarea id="submit-advice" name="Text1" cols="40" rows="5" placeholder="서비스에 대한 조언을 남겨주세요"></textarea>
+    </div>
+    <button id="submit">지금 제출!</button>
 
     <div id="popup" style="display:none;">
-        <h1>감사합니다. </h1>
-        <p>이제는 우리는 같은 배를 탔습니다.  </p>
+        <h1>감사합니다.</h1>
+        <p>이제는 우리는 같은 배를 탔습니다.</p>
     </div>
 
     <script src="https://code.jquery.com/jquery-latest.min.js"></script>
@@ -209,7 +232,7 @@
             axios.get(addrScript+'?action=insert&table=visitor&data='+data)
                 .then(response => {
                     console.log(JSON.stringify(response));
-                    $('<div id="result" style="font-size:10px; width:200px; word-wrap: break-word; text-overflow: ellipsis; overflow:hidden"></div>').appendTo('#wrapper');
+                    // $('<div id="result" style="font-size:10px; width:200px; word-wrap: break-word; text-overflow: ellipsis; overflow:hidden"></div>').appendTo('#wrapper');
                     $('#result').text(JSON.stringify(response));
                 })
 
