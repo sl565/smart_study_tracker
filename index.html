@@ -1,4 +1,5 @@
 <html>
+
 <head>
     <title>개인화된 학습 진도 추적기</title>
     <style>
@@ -11,25 +12,34 @@
             padding: 20px;
             background-color: #f4f4f4;
         }
+
         h3 {
             color: #2c3e50;
             text-align: center;
         }
+
         .form-group {
             margin-bottom: 20px;
         }
+
         label {
             display: block;
             margin-bottom: 5px;
             font-weight: bold;
         }
-        input[type="text"], input[type="email"], input[type="number"], input[type="date"], textarea {
+
+        input[type="text"],
+        input[type="email"],
+        input[type="number"],
+        input[type="date"],
+        textarea {
             width: 100%;
             padding: 8px;
             border: 1px solid #ddd;
             border-radius: 4px;
             box-sizing: border-box;
         }
+
         button {
             background-color: #3498db;
             color: white;
@@ -39,9 +49,11 @@
             cursor: pointer;
             font-size: 16px;
         }
+
         button:hover {
             background-color: #2980b9;
         }
+
         .statistics {
             background-color: white;
             border: 1px solid #ddd;
@@ -49,12 +61,14 @@
             padding: 15px;
             margin-top: 20px;
         }
+
         .statistics h4 {
             margin-top: 0;
             color: #2c3e50;
         }
     </style>
 </head>
+
 <body>
     <div id="content">
         <div id="wrapper">
@@ -111,12 +125,17 @@
     <script src="https://cdn.jsdelivr.net/npm/busy-load/dist/app.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/busy-load/dist/app.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/gh/dinoqqq/simple-popup@master/dist/jquery.simple-popup.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/gh/dinoqqq/simple-popup@master/dist/jquery.simple-popup.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/gh/dinoqqq/simple-popup@master/dist/jquery.simple-popup.min.css"
+        rel="stylesheet" type="text/css" />
 
     <script>
         let studyRecords = [];
 
         function updateStatistics() {
+            if (!studyRecords || studyRecords.length === 0) {
+                console.log("No study records available");
+                return;
+            }
             const totalTime = studyRecords.reduce((sum, record) => sum + parseInt(record.studyTime), 0);
             const avgTime = studyRecords.length > 0 ? totalTime / studyRecords.length : 0;
 
@@ -126,13 +145,28 @@
             const targetDate = new Date($('#target-date').val());
             const today = new Date();
             const daysRemaining = Math.ceil((targetDate - today) / (1000 * 60 * 60 * 24));
-            
+
             if (daysRemaining > 0) {
                 $('#remaining-time').text(`${daysRemaining} 일`);
             } else {
                 $('#remaining-time').text('목표일이 지났습니다.');
             }
         }
+
+        // 데이터 삽입 후
+        axios.get(addrScript + '?action=insert&table=visitor&data=' + data)
+            .then(response => {
+                console.log(JSON.stringify(response));
+                if (response.data && response.data.success) {
+                    // 성공적으로 데이터가 삽입됨
+                    updateStatistics();
+                } else {
+                    console.error("Data insertion failed:", response.data.error);
+
+                })
+            .catch(error => {
+                console.error("Error during data insertion:", error);
+            });
 
         $("#submit-study").on("click", function () {
             $.busyLoadFull("show");
@@ -164,8 +198,8 @@
                     console.log(response.data.data);
                     $.busyLoadFull("hide");
                     alert("학습 기록이 저장되었습니다.");
-                    
-                    studyRecords.push({studyTime: studyTime});
+
+                    studyRecords.push({ studyTime: studyTime });
                     updateStatistics();
 
                     $('#learning-goal').val('');
@@ -180,23 +214,23 @@
 
             const email = $("#submit-email").val();
             const advice = $("#submit-advice").val();
-    
+
             function validateEmail(email) {
                 var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
                 return re.test(email);
             }
-    
+
             if (email == '' || !validateEmail(email)) {
                 alert("이메일이 유효하지 않아 알림을 드릴 수가 없습니다. ");
                 return;
             }
-    
+
             var finalData = JSON.stringify({
                 "id": "getUVfromCookie()",
                 "email": email,
                 "advice": advice
             })
-    
+
             axios.get('https://script.google.com/macros/s/AKfycbxF-iVXC7psov68UrzPMl3hXpl9QnYHzbGj7qvvUcf3jIkAfuQqB3eFNmURZ5ynys8/exec?action=insert&table=registration&data=' + finalData)
                 .then(response => {
                     console.log(response.data.data);
@@ -219,17 +253,19 @@
         var data = JSON.stringify({
             "id": getUVfromCookie(),
             "landingUrl": window.location.href,
-            "ip": "client_ip", // 실제 구현 시 서버에서 처리
+            "ip": "client_ip", // 서버에서 처리해야 할 수 있음
             "referer": document.referrer,
-            "time_stamp": getTimeStamp(),
-            "utm": "utm_source", // 실제 구현 필요
-            "device": "user_device" // 실제 구현 필요
+            "time_stamp": new Date().toISOString(),
+            "utm": "utm_source", // 실제 UTM 파라미터를 사용해야 함
+            "device": navigator.userAgent // 또는 더 정확한 디바이스 탐지 로직
         });
+
+        var encodedData = encodeURIComponent(data);
 
         $(document).ready(function () {
             addrScript = 'https://script.google.com/macros/s/AKfycbxF-iVXC7psov68UrzPMl3hXpl9QnYHzbGj7qvvUcf3jIkAfuQqB3eFNmURZ5ynys8/exec';
 
-            axios.get(addrScript+'?action=insert&table=visitor&data='+data)
+            axios.get(addrScript + '?action=insert&table=visitor&data=' + data)
                 .then(response => {
                     console.log(JSON.stringify(response));
                     // $('<div id="result" style="font-size:10px; width:200px; word-wrap: break-word; text-overflow: ellipsis; overflow:hidden"></div>').appendTo('#wrapper');
@@ -237,7 +273,7 @@
                 })
 
             // 페이지 로드 시 학습 기록 가져오기
-            axios.get(addrScript+'?action=read&table=study_progress')
+            axios.get(addrScript + '?action=read&table=study_progress')
                 .then(response => {
                     studyRecords = response.data.data;
                     updateStatistics();
@@ -245,4 +281,5 @@
         });
     </script>
 </body>
+
 </html>
