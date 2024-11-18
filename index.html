@@ -162,8 +162,8 @@
                     updateStatistics();
                 } else {
                     console.error("Data insertion failed:", response.data.error);
-
-                })
+                }
+            })
             .catch(error => {
                 console.error("Error during data insertion:", error);
             });
