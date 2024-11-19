@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,25 +15,34 @@
             padding: 20px;
             background-color: #f4f4f4;
         }
+
         h3 {
             color: #2c3e50;
             text-align: center;
         }
+
         .form-group {
             margin-bottom: 20px;
         }
+
         label {
             display: block;
             margin-bottom: 5px;
             font-weight: bold;
         }
-        input[type="text"], input[type="email"], input[type="number"], input[type="date"], textarea {
+
+        input[type="text"],
+        input[type="email"],
+        input[type="number"],
+        input[type="date"],
+        textarea {
             width: 100%;
             padding: 8px;
             border: 1px solid #ddd;
             border-radius: 4px;
             box-sizing: border-box;
         }
+
         button {
             background-color: #3498db;
             color: white;
@@ -42,9 +52,11 @@
             cursor: pointer;
             font-size: 16px;
         }
+
         button:hover {
             background-color: #2980b9;
         }
+
         .statistics {
             background-color: white;
             border: 1px solid #ddd;
@@ -52,27 +64,66 @@
             padding: 15px;
             margin-top: 20px;
         }
+
         .statistics h4 {
             margin-top: 0;
             color: #2c3e50;
         }
+        /* 새로운 스타일 추가 */
+        .subheader {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+        }
+        .landing-section, 
+        .motivation-section, 
+        .psychological-trigger, 
+        .call-to-action {
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        blockquote {
+            font-style: italic;
+            color: #333;
+        }
     </style>
 </head>
+
 <body>
     <nav>
-        <ul>
-          <li><a href="index.html">한국어</a></li>
-          <li><a href="translated.html">English</a></li>
-        </ul>
+        <a href="index.html">한국어</a>
+        <a href="translated.html">English</a>
     </nav>
+
+    <h3>Learning Roadmap: Turning Your Dreams into Data</h3>
+    <p class="subheader">
+        Goals are more than just dreams. Start tracking your learning journey and visualize your success now!
+    </p>
+
+    <div class="landing-section">
+        <h4>🚀 Win with Data-Driven Learning!</h4>
+        <p>Average learners study without a plan. But you're different. We support your data-driven growth.</p>
+    </div>
+
+    <div class="motivation-section">
+        <h4>📊 We Visualize Your Learning</h4>
+        <p>
+            ✅ Real-time learning progress tracking <br>
+            ✅ Time remaining to goal calculation <br>
+            ✅ Personalized learning insights
+        </p>
+    </div>
 
     <div class="form-group">
         <label for="learning-goal">Learning Goal:</label>
-        <input id="learning-goal" type="text" placeholder="예: TOEIC 900점 달성" />
+        <input id="learning-goal" type="text" placeholder="eg: TOEIC score 900" />
     </div>
     <div class="form-group">
         <label for="subject">Subject:</label>
-        <input id="subject" type="text" placeholder="예: 영어, 수학, 과학" />
+        <input id="subject" type="text" placeholder="eg: english, math, science" />
     </div>
     <div class="form-group">
         <label for="study-time">Today's Study Time(min):</label>
@@ -93,6 +144,16 @@
         <p>Total Study Time: <span id="total-study-time">0</span> min</p>
         <p>Average Daily Study Time: <span id="avg-study-time">0</span> min</p>
         <p>Time Remaing to Goal: <span id="remaining-time">calculating...</span></p>
+    </div>
+
+    <div class="psychological-trigger">
+        <blockquote>"Success is not a coincidence. It's the result of planning and execution. Prove your learning with
+            data."</blockquote>
+    </div>
+
+    <div class="call-to-action">
+        <h4>🎯 Start Your Learning Journey Now!</h4>
+        <p>Small daily progress leads to big success. Take your first step now!</p>
     </div>
 
     <div id="popup" style="display:none;">
@@ -361,4 +422,5 @@
     </script>
 
 </body>
+
 </html>

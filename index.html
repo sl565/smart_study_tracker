@@ -56,15 +56,55 @@
             margin-top: 0;
             color: #2c3e50;
         }
+        /* 새로운 스타일 추가 */
+        .subheader {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+        }
+        .landing-section, 
+        .motivation-section, 
+        .psychological-trigger, 
+        .call-to-action {
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        blockquote {
+            font-style: italic;
+            color: #333;
+        }
     </style>
 </head>
 <body>
     <nav>
-        <ul>
-          <li><a href="index.html">한국어</a></li>
-          <li><a href="translated.html">English</a></li>
-        </ul>
+        <a href="index.html">한국어</a>
+        <a href="translated.html">English</a>
     </nav>
+
+     <h3>당신의 꿈을 데이터로 만드는 학습 로드맵</h3>
+    <p class="subheader">
+        목표는 꿈이 아니라 계획입니다. 지금 바로 당신의 학습 여정을 추적하고 성공을 다가가세요!
+    </p>
+
+    <div class="landing-section">
+        <h4>🚀 당신의 학습, 데이터를 활용해 보세요!</h4>
+        <p>
+        일반적인 사람은 계획없이 공부합니다. 하지만,
+        당신은 다릅니다. 당신은 데이터를 활용하여 성장합니다.
+        </p>
+    </div>
+
+    <div class="motivation-section">
+        <h4>📊 당신의 학습, 시각화를 도와드리겠습니다</h4>
+        <p>
+            ✅ 실시간 학습 진행 상황 추적 <br>
+            ✅ 목표 달성까지 남은 시간 계산 <br>
+            ✅ 개인 맞춤형 학습 인사이트 제공
+        </p>
+    </div>
 
     <div class="form-group">
         <label for="learning-goal">학습 목표:</label>
@@ -94,6 +134,15 @@
         <p>평균 일일 학습 시간: <span id="avg-study-time">0</span> 분</p>
         <p>목표 달성까지 남은 시간: <span id="remaining-time">계산 중...</span></p>
     </div>
+
+    <div class="psychological-trigger">
+         <blockquote>"성공은 우연이 아닙니다. 계획과 실행의 결과입니다. 당신의 학습을 데이터로 증명해보세요."</blockquote> 
+     </div>
+
+     <div class="call-to-action">
+         <h4>🎯 지금 바로 당신의 학습 여정을 시작하세요!</h4>
+         <p>매일의 작은 진전이 큰 성공으로 이어집니다. 첫 걸음을 지금 내딛어 보세요!</p> 
+     </div>
 
     <div id="popup" style="display:none;">
         <h1>감사합니다. </h1>
