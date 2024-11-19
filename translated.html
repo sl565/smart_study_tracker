@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>개인화된 학습 진도 추적기</title>
+    <title>Personalized Learning Progress Tracker</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -67,45 +67,45 @@
     </nav>
 
     <div class="form-group">
-        <label for="learning-goal">학습 목표:</label>
+        <label for="learning-goal">Learning Goal:</label>
         <input id="learning-goal" type="text" placeholder="예: TOEIC 900점 달성" />
     </div>
     <div class="form-group">
-        <label for="subject">과목:</label>
+        <label for="subject">Subject:</label>
         <input id="subject" type="text" placeholder="예: 영어, 수학, 과학" />
     </div>
     <div class="form-group">
-        <label for="study-time">오늘의 학습 시간 (분):</label>
+        <label for="study-time">Today's Study Time(min):</label>
         <input id="study-time" type="number" min="0" />
     </div>
     <div class="form-group">
-        <label for="progress">진도 (%):</label>
+        <label for="progress">Progress (%):</label>
         <input id="progress" type="number" min="0" max="100" />
     </div>
     <div class="form-group">
-        <label for="target-date">목표 달성 예정일:</label>
+        <label for="target-date">Target Achievement Date:</label>
         <input id="target-date" type="date" />
     </div>
-    <button id="submit-study">학습 기록 저장</button>
+    <button id="submit-study">Save Learning Record</button>
 
     <div class="statistics">
-        <h4>학습 통계</h4>
-        <p>총 학습 시간: <span id="total-study-time">0</span> 분</p>
-        <p>평균 일일 학습 시간: <span id="avg-study-time">0</span> 분</p>
-        <p>목표 달성까지 남은 시간: <span id="remaining-time">계산 중...</span></p>
+        <h4>Learning Statistics</h4>
+        <p>Total Study Time: <span id="total-study-time">0</span> min</p>
+        <p>Average Daily Study Time: <span id="avg-study-time">0</span> min</p>
+        <p>Time Remaing to Goal: <span id="remaining-time">calculating...</span></p>
     </div>
 
     <div id="popup" style="display:none;">
-        <h1>감사합니다. </h1>
-        <p>이제는 우리는 같은 배를 탔습니다. </p>
+        <h1>Thank you </h1>
+        <p>Now we are on the same boat. </p>
     </div>
 
     <center>
-        <p>이메일을 남겨주시면 서비스가 런칭되었을 때 알림을 드리겠습니다. </p>
+        <p>Leave your email and we'll notify you when the service launches.</p>
         <input id="submit-email" type="email" placeholder="알림을 받으실 이메일" /> <br><br>
-        <p>서비스가 이렇게 되었으면 좋겠다는 조언을 해 주세요 </p>
+        <p>Please share your suggestions for the service </p>
         <textarea id="submit-advice" name="Text1" cols="40" rows="5" placeholder="서비스에 대한 조언을 남겨주세요"></textarea><br>
-        <button style="width:350px;" id="submit">지금 제출! </button>
+        <button style="width:350px;" id="submit">Submit Now! </button>
     </center>
 
     <script src="https://code.jquery.com/jquery-latest.min.js"></script>
@@ -222,7 +222,7 @@
             if (daysRemaining > 0) {
                 $('#remaining-time').text(`${daysRemaining} 일`);
             } else {
-                $('#remaining-time').text('목표일이 지났습니다.');
+                $('#remaining-time').text('You passed the target date');
             }
         }
 
@@ -236,7 +236,7 @@
             const targetDate = $("#target-date").val();
 
             if (learningGoal == '' || subject == '' || studyTime == '' || progress == '' || targetDate == '') {
-                alert("모든 필드를 채워주세요.");
+                alert("Fill out the entire section.");
                 $.busyLoadFull("hide");
                 return;
             }
@@ -257,7 +257,7 @@
                 .then(response => {
                     console.log(JSON.stringify(response));
                     $.busyLoadFull("hide");
-                    alert("학습 기록이 저장되었습니다.");
+                    alert("Learning Record Saved!");
 
                     studyRecords.push({ studyTime: studyTime });
                     updateStatistics();
@@ -273,7 +273,7 @@
                 .catch(error => {
                     console.error('Error:', error);
                     $.busyLoadFull("hide");
-                    alert("학습 기록 저장 중 오류가 발생했습니다.");
+                    alert("Error while saving the learning record");
                 });
         });
 
@@ -310,7 +310,7 @@
             }
 
             if (email == '' || !validateEmail(email)) {
-                alert("이메일이 유효하지 않아 알림을 드릴 수가 없습니다. ");
+                alert("Your email has incorrect format");
                 return;
             }
 
@@ -361,5 +361,4 @@
     </script>
 
 </body>
-
 </html>
