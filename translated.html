@@ -7,7 +7,7 @@
     <title>Personalized Learning Progress Tracker</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: sans-serif;
             line-height: 1.6;
             color: #333;
             max-width: 800px;
@@ -281,7 +281,7 @@
             const daysRemaining = Math.ceil((targetDate - today) / (1000 * 60 * 60 * 24));
 
             if (daysRemaining > 0) {
-                $('#remaining-time').text(`${daysRemaining} 일`);
+                $('#remaining-time').text(`${daysRemaining} day(s)`);
             } else {
                 $('#remaining-time').text('You passed the target date');
             }
