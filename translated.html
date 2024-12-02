@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Personalized Learning Progress Tracker</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body {
             font-family: sans-serif;
@@ -140,6 +141,11 @@
     <button id="submit-study">Save Learning Record</button>
 
     <div class="statistics">
+        <h4>Learning Progress Graph</h4>
+        <canvas id="studyProgressChart"></canvas>
+    </div>
+
+    <div class="statistics">
         <h4>Learning Statistics</h4>
         <p>Total Study Time: <span id="total-study-time">0</span> min</p>
         <p>Average Daily Study Time: <span id="avg-study-time">0</span> min</p>
@@ -265,6 +271,51 @@
     <script>
         let studyRecords = [];
 
+        // 차트 생성 함수
+        function createChart() {
+            const ctx = document.getElementById('studyProgressChart').getContext('2d');
+            const labels = studyRecords.map((_, index) => `Day ${index + 1}`);
+            const data = studyRecords.map(record => record.studyTime);
+
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'daily study time (min)',
+                        data: data,
+                        borderColor: 'rgb(75, 192, 192)',
+                        tension: 0.1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        // 목표 달성 예측 함수
+        function predictCompletion() {
+            if (studyRecords.length < 3) {
+                return; // 데이터가 충분하지 않음
+            }
+
+            const avgProgress = studyRecords.reduce((sum, record) => sum + record.progress, 0) / studyRecords.length;
+            const daysToCompletion = (100 - avgProgress) / (avgProgress / studyRecords.length);
+            const predictedDate = new Date();
+            predictedDate.setDate(predictedDate.getDate() + daysToCompletion);
+
+            $('#predicted-completion-date').text(predictedDate.toLocaleDateString());
+
+            const probability = Math.min(avgProgress * studyRecords.length / 100, 1) * 100;
+            $('#completion-probability').text(`${probability.toFixed(2)}%`);
+        }
+
         function updateStatistics() {
             if (!studyRecords || studyRecords.length === 0) {
                 console.log("No study records available");
@@ -276,15 +327,18 @@
             $('#total-study-time').text(totalTime);
             $('#avg-study-time').text(avgTime.toFixed(2));
 
-            const targetDate = new Date($('#target-date').val());
+            const targetDate = new Date(studyRecords[studyRecords.length - 1].targetDate);
             const today = new Date();
             const daysRemaining = Math.ceil((targetDate - today) / (1000 * 60 * 60 * 24));
 
             if (daysRemaining > 0) {
-                $('#remaining-time').text(`${daysRemaining} day(s)`);
+                $('#remaining-time').text(`${daysRemaining} 일`);
             } else {
-                $('#remaining-time').text('You passed the target date');
+                $('#remaining-time').text('Target date is expired.');
             }
+
+            createChart();
+            predictCompletion();
         }
 
         $("#submit-study").on("click", function () {
@@ -297,10 +351,21 @@
             const targetDate = $("#target-date").val();
 
             if (learningGoal == '' || subject == '' || studyTime == '' || progress == '' || targetDate == '') {
-                alert("Fill out the entire section.");
+                alert("Please fill out the entire form.");
                 $.busyLoadFull("hide");
                 return;
             }
+
+            // studyRecords 배열에 새 기록 추가
+            studyRecords.push({
+                learningGoal: learningGoal,
+                subject: subject,
+                studyTime: parseInt(studyTime, 10),
+                progress: parseFloat(progress),
+                targetDate: new Date(targetDate).toISOString()
+            });
+
+            updateStatistics();
 
             var studyData = JSON.stringify({
                 "id": getUVfromCookie(),
@@ -318,18 +383,16 @@
                 .then(response => {
                     console.log(JSON.stringify(response));
                     $.busyLoadFull("hide");
-                    alert("Learning Record Saved!");
-
-                    studyRecords.push({ studyTime: studyTime });
-                    updateStatistics();
+                    alert("Study record is saved");
 
                     $('#learning-goal').val('');
                     $('#subject').val('');
                     $('#study-time').val('');
                     $('#progress').val('');
+                    $('#target-date').val('');
 
                     // $('<div id="result" style="font-size:10px; width:200px; word-wrap: break-word; text-overflow: ellipsis; overflow:hidden"></div>').appendTo('#wrapper');
-                    $('#result').text(JSON.stringify(response));
+                    // $('#result').text(JSON.stringify(response));
                 })
                 .catch(error => {
                     console.error('Error:', error);

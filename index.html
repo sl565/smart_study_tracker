@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>개인화된 학습 진도 추적기</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body {
             font-family: sans-serif;
@@ -14,25 +16,34 @@
             padding: 20px;
             background-color: #f4f4f4;
         }
+
         h3 {
             color: #2c3e50;
             text-align: center;
         }
+
         .form-group {
             margin-bottom: 20px;
         }
+
         label {
             display: block;
             margin-bottom: 5px;
             font-weight: bold;
         }
-        input[type="text"], input[type="email"], input[type="number"], input[type="date"], textarea {
+
+        input[type="text"],
+        input[type="email"],
+        input[type="number"],
+        input[type="date"],
+        textarea {
             width: 100%;
             padding: 8px;
             border: 1px solid #ddd;
             border-radius: 4px;
             box-sizing: border-box;
         }
+
         button {
             background-color: #3498db;
             color: white;
@@ -42,9 +53,11 @@
             cursor: pointer;
             font-size: 16px;
         }
+
         button:hover {
             background-color: #2980b9;
         }
+
         .statistics {
             background-color: white;
             border: 1px solid #ddd;
@@ -52,19 +65,22 @@
             padding: 15px;
             margin-top: 20px;
         }
+
         .statistics h4 {
             margin-top: 0;
             color: #2c3e50;
         }
+
         /* 새로운 스타일 추가 */
         .subheader {
             text-align: center;
             color: #666;
             margin-bottom: 30px;
         }
-        .landing-section, 
-        .motivation-section, 
-        .psychological-trigger, 
+
+        .landing-section,
+        .motivation-section,
+        .psychological-trigger,
         .call-to-action {
             background-color: #f9f9f9;
             border-radius: 10px;
@@ -72,19 +88,21 @@
             margin-bottom: 20px;
             text-align: center;
         }
+
         blockquote {
             font-style: italic;
             color: #333;
         }
     </style>
 </head>
+
 <body>
     <nav>
         <a href="index.html">한국어</a>
         <a href="translated.html">English</a>
     </nav>
 
-     <h3>당신의 꿈을 데이터로 만드는 학습 로드맵</h3>
+    <h3>당신의 꿈을 데이터로 만드는 학습 로드맵</h3>
     <p class="subheader">
         목표는 꿈이 아니라 계획입니다. 지금 바로 당신의 학습 여정을 추적하고 성공을 다가가세요!
     </p>
@@ -92,8 +110,8 @@
     <div class="landing-section">
         <h4>🚀 당신의 학습, 데이터를 활용해 보세요!</h4>
         <p>
-        일반적인 사람은 계획없이 공부합니다. 하지만,
-        당신은 다릅니다. 당신은 데이터를 활용하여 성장합니다.
+            일반적인 사람은 계획없이 공부합니다. 하지만,
+            당신은 다릅니다. 당신은 데이터를 활용하여 성장합니다.
         </p>
     </div>
 
@@ -129,6 +147,11 @@
     <button id="submit-study">학습 기록 저장</button>
 
     <div class="statistics">
+        <h4>학습 진행 그래프</h4>
+        <canvas id="studyProgressChart"></canvas>
+    </div>
+
+    <div class="statistics">
         <h4>학습 통계</h4>
         <p>총 학습 시간: <span id="total-study-time">0</span> 분</p>
         <p>평균 일일 학습 시간: <span id="avg-study-time">0</span> 분</p>
@@ -136,13 +159,13 @@
     </div>
 
     <div class="psychological-trigger">
-         <blockquote>"성공은 우연이 아닙니다. 계획과 실행의 결과입니다. 당신의 학습을 데이터로 증명해보세요."</blockquote> 
-     </div>
+        <blockquote>"성공은 우연이 아닙니다. 계획과 실행의 결과입니다. 당신의 학습을 데이터로 증명해보세요."</blockquote>
+    </div>
 
-     <div class="call-to-action">
-         <h4>🎯 지금 바로 당신의 학습 여정을 시작하세요!</h4>
-         <p>매일의 작은 진전이 큰 성공으로 이어집니다. 첫 걸음을 지금 내딛어 보세요!</p> 
-     </div>
+    <div class="call-to-action">
+        <h4>🎯 지금 바로 당신의 학습 여정을 시작하세요!</h4>
+        <p>매일의 작은 진전이 큰 성공으로 이어집니다. 첫 걸음을 지금 내딛어 보세요!</p>
+    </div>
 
     <div id="popup" style="display:none;">
         <h1>감사합니다. </h1>
@@ -253,6 +276,51 @@
     <script>
         let studyRecords = [];
 
+        // 차트 생성 함수
+        function createChart() {
+            const ctx = document.getElementById('studyProgressChart').getContext('2d');
+            const labels = studyRecords.map((_, index) => `Day ${index + 1}`);
+            const data = studyRecords.map(record => record.studyTime);
+
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: '일일 학습 시간 (분)',
+                        data: data,
+                        borderColor: 'rgb(75, 192, 192)',
+                        tension: 0.1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        // 목표 달성 예측 함수
+        function predictCompletion() {
+            if (studyRecords.length < 3) {
+                return; // 데이터가 충분하지 않음
+            }
+
+            const avgProgress = studyRecords.reduce((sum, record) => sum + record.progress, 0) / studyRecords.length;
+            const daysToCompletion = (100 - avgProgress) / (avgProgress / studyRecords.length);
+            const predictedDate = new Date();
+            predictedDate.setDate(predictedDate.getDate() + daysToCompletion);
+
+            $('#predicted-completion-date').text(predictedDate.toLocaleDateString());
+
+            const probability = Math.min(avgProgress * studyRecords.length / 100, 1) * 100;
+            $('#completion-probability').text(`${probability.toFixed(2)}%`);
+        }
+
         function updateStatistics() {
             if (!studyRecords || studyRecords.length === 0) {
                 console.log("No study records available");
@@ -264,7 +332,7 @@
             $('#total-study-time').text(totalTime);
             $('#avg-study-time').text(avgTime.toFixed(2));
 
-            const targetDate = new Date($('#target-date').val());
+            const targetDate = new Date(studyRecords[studyRecords.length - 1].targetDate);
             const today = new Date();
             const daysRemaining = Math.ceil((targetDate - today) / (1000 * 60 * 60 * 24));
 
@@ -273,6 +341,9 @@
             } else {
                 $('#remaining-time').text('목표일이 지났습니다.');
             }
+
+            createChart();
+            predictCompletion();
         }
 
         $("#submit-study").on("click", function () {
@@ -289,6 +360,17 @@
                 $.busyLoadFull("hide");
                 return;
             }
+
+            // studyRecords 배열에 새 기록 추가
+            studyRecords.push({
+                learningGoal: learningGoal,
+                subject: subject,
+                studyTime: parseInt(studyTime, 10),
+                progress: parseFloat(progress),
+                targetDate: new Date(targetDate).toISOString()
+            });
+
+            updateStatistics();
 
             var studyData = JSON.stringify({
                 "id": getUVfromCookie(),
@@ -308,16 +390,14 @@
                     $.busyLoadFull("hide");
                     alert("학습 기록이 저장되었습니다.");
 
-                    studyRecords.push({ studyTime: studyTime });
-                    updateStatistics();
-
                     $('#learning-goal').val('');
                     $('#subject').val('');
                     $('#study-time').val('');
                     $('#progress').val('');
+                    $('#target-date').val('');
 
                     // $('<div id="result" style="font-size:10px; width:200px; word-wrap: break-word; text-overflow: ellipsis; overflow:hidden"></div>').appendTo('#wrapper');
-                    $('#result').text(JSON.stringify(response));
+                    // $('#result').text(JSON.stringify(response));
                 })
                 .catch(error => {
                     console.error('Error:', error);
